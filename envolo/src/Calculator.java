@@ -96,7 +96,7 @@ public class Calculator {
                 d = divideScore(restC, n2.getNewValue());
 
                 String s;
-                if(x<0||y<0) {
+                if( (x<0||y<0) && !(x<0&&y<0)) {
                      s = "-"+a + "." + b + c + d;
                 }else{
                      s = +a + "." + b + c + d;
