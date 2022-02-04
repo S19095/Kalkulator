@@ -35,63 +35,81 @@ public class Calculator {
 
     public int power(int x, int y){
 
-        int sum =1;
-        int i = y;
-        while(i>0){
-            sum = multiply(sum,x);
-            i=subtract(i,1);
+        if(y>=0) {
+            int sum = 1;
+            int i = y;
+            while (i > 0) {
+                sum = multiply(sum, x);
+                i = subtract(i, 1);
+            }
+            return sum;
+        }else {
+            return 0;
         }
-        return sum;
     }
 
-   public double divide(double x, double y) {
+   public double divide(double x, double y) throws Exception {
 
-        NewFormOfNumberDouble n1 = new NewFormOfNumberDouble(x,this);
-        NewFormOfNumberDouble n2 = new NewFormOfNumberDouble(y,this);
+        try {
+            if (y != 0) {
+                NewFormOfNumberDouble n1 = new NewFormOfNumberDouble(x, this);
+                NewFormOfNumberDouble n2 = new NewFormOfNumberDouble(y, this);
 
-       if(n1.getDecimalPlace()>n2.getDecimalPlace()){
-           int tmp= subtract(n1.getDecimalPlace(),n2.getDecimalPlace());
-           int i =0;
-           while(i<tmp){
-               n2.setNumber(multiply(n2.getNewValue(),10));
-               i =add(i,1);
-           }
-       }else if(n1.getDecimalPlace()<n2.getDecimalPlace()){
-           int tmp= subtract(n2.getDecimalPlace(),n1.getDecimalPlace());
-           int i =0;
-           while(i<tmp){
-               n1.setNumber(multiply(n1.getNewValue(),10));
-               i =add(i,1);
-           }
-       }
+                if (n1.getDecimalPlace() > n2.getDecimalPlace()) {
+                    int tmp = subtract(n1.getDecimalPlace(), n2.getDecimalPlace());
+                    int i = 0;
+                    while (i < tmp) {
+                        n2.setNumber(multiply(n2.getNewValue(), 10));
+                        i = add(i, 1);
+                    }
+                } else if (n1.getDecimalPlace() < n2.getDecimalPlace()) {
+                    int tmp = subtract(n2.getDecimalPlace(), n1.getDecimalPlace());
+                    int i = 0;
+                    while (i < tmp) {
+                        n1.setNumber(multiply(n1.getNewValue(), 10));
+                        i = add(i, 1);
+                    }
 
-       int a,b,c,d;
-       int restA,restB,restC;
-       int n1clone , n2clone;
+                }
+
+                int a, b, c, d;
+                int restA, restB, restC;
+                int n1clone, n2clone;
 
 
-       n1clone = n1.getNewValue();
-       n2clone = n2.getNewValue();
+                n1clone = n1.getNewValue();
+                n2clone = n2.getNewValue();
 
-        a = 0;
-        restA = n1clone;
+                a = 0;
+                restA = n1clone;
 
-        while (restA >= n2clone) {
-            a = add(a,1);
-            restA= subtract(restA,n2clone);
+                while (restA >= n2clone) {
+                    a = add(a, 1);
+                    restA = subtract(restA, n2clone);
 
+                }
+
+                b = divideScore(restA, n2.getNewValue());
+                restB = divideRest(restA, n2.getNewValue());
+                c = divideScore(restB, n2.getNewValue());
+                restC = divideRest(restB, n2.getNewValue());
+                d = divideScore(restC, n2.getNewValue());
+
+                String s;
+                if(x<0||y<0) {
+                     s = "-"+a + "." + b + c + d;
+                }else{
+                     s = +a + "." + b + c + d;
+                }
+                Double finaldouble = new Double(s);
+                return finaldouble;
+            } else {
+                throw new Exception("nie można dzielić przez zero");
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());;
+            return 0.0;
         }
-
-        b = divideScore(restA,n2.getNewValue());
-        restB =divideRest(restA,n2.getNewValue());
-        c =divideScore(restB,n2.getNewValue());
-        restC =divideRest(restB,n2.getNewValue());
-        d = divideScore(restC,n2.getNewValue());
-
-        String s = a+"."+b+c+d;
-        Double finaldouble = new Double(s);
-
-        return finaldouble;
     }
 
     public int divideScore(int x, int y) {
@@ -135,80 +153,61 @@ public class Calculator {
         return sum;
     }
 
-    public double xProcentOfy(double x,double y){
+    public double xProcentOfy(double x,double y) throws Exception {
 
-        NewFormOfNumberDouble n1 = new NewFormOfNumberDouble(x,this);
-        NewFormOfNumberDouble n2 = new NewFormOfNumberDouble(y,this);
+        try {
+            if (x >= 0) {
+                NewFormOfNumberDouble n1 = new NewFormOfNumberDouble(x, this);
+                NewFormOfNumberDouble n2 = new NewFormOfNumberDouble(y, this);
 
-        int divider = 10;
+                int divider = 100;
 
-        if(n1.getDecimalPlace()>n2.getDecimalPlace()){
-            int tmp= subtract(n1.getDecimalPlace(), n2.getDecimalPlace());
-            int i =0;
-            while(i<tmp){
-                n2.setNumber(multiply(n2.getNewValue(),10));
-                i =add(i,1);
-            }
-            i=0;
-            tmp = subtract(n1.getLenghtofStringTab(),n1.getDecimalPlace());
-            while(i<tmp){
-                divider = multiply(divider,10);
-                i =add(i,1);
-            }
+                int i = 0;
+                int tmp = n1.getDecimalPlace();
+                tmp = multiply(tmp, 2);
+                while (i < tmp) {
+                    divider = multiply(divider, 10);
+                    i = add(i, 1);
+                }
 
-        }else if(n1.getDecimalPlace()<n2.getDecimalPlace()){
-            int tmp= subtract(n2.getDecimalPlace(), n1.getDecimalPlace());
-            int i =0;
-            while(i<tmp){
-                n1.setNumber(multiply(n1.getNewValue(),10));
-                i =add(i,1);
+                int value = multiply(n1.getNewValue(), n2.getNewValue());
+
+                int a, b, c, d;
+                int restA, restB, restC;
+                int xclone, yclone;
+
+                xclone = value;
+                yclone = divider;
+
+                a = 0;
+                restA = xclone;
+
+                while (restA >= yclone) {
+                    a = add(a, 1);
+                    restA = subtract(restA, yclone);
+
+                }
+
+                b = divideScore(restA, divider);
+                restB = divideRest(restA, divider);
+                c = divideScore(restB, divider);
+                restC = divideRest(restB, divider);
+                d = divideScore(restC, divider);
+                String s;
+                if (y < 0) {
+                    s = "-" + a + "." + b + c + d;
+                } else {
+                    s = a + "." + b + c + d;
+                }
+                Double finalvalue = new Double(s);
+
+                return finalvalue;
+            } else {
+                throw new Exception("tak nie można");
             }
-            i=0;
-            tmp = subtract(n2.getLenghtofStringTab(),n2.getDecimalPlace());
-            while(i<tmp){
-                divider = multiply(divider,10);
-                i =add(i,1);
-            }
-        }else{
-            int i=0;
-            int tmp = subtract(n1.getLenghtofStringTab(),n1.getLenghtofStringTab());
-            while(i<tmp){
-                divider = multiply(divider,10);
-                i =add(i,1);
-            }
+        }catch (Exception e){
+            System.out.println("ujemny procent?");;
+            return 0.0;
         }
-
-        int value = multiply(n1.getNewValue(), n2.getNewValue());
-
-        int a,b,c,d;
-        int restA,restB,restC;
-        int xclone , yclone;
-
-
-        System.out.println(value);
-        System.out.println(divider);
-        xclone = value;
-        yclone = divider;
-
-        a = 0;
-        restA = xclone;
-
-        while (restA >= yclone) {
-            a = add(a,1);
-            restA= subtract(restA,yclone);
-
-        }
-
-        b = divideScore(restA,divider);
-        restB =divideRest(restA,divider);
-        c =divideScore(restB,divider);
-        restC =divideRest(restB,divider);
-        d = divideScore(restC,divider);
-
-        String s = a+"."+b+c+d;
-        Double finalvalue = new Double(s);
-
-        return finalvalue;
-
     }
 }

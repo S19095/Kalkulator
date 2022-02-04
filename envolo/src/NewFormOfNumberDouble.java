@@ -68,15 +68,26 @@ public class NewFormOfNumberDouble {
     private int CreateNewValue(Calculator calculator, String[] numberStringTab, ArrayList<Integer> tab, int lenghtofStringTab){
         int vaule = 0;
         int i=0;
+        int j=0;
         while(i< lenghtofStringTab) {
-            if (!numberStringTab[i].equals(".")) {
+            if(numberStringTab[i].equals("-")){
+                j = calculator.add(j, 1);
+            }
+            if (!numberStringTab[i].equals(".")&& !numberStringTab[i].equals("-")) {
                 tab.add(Integer.valueOf(numberStringTab[i]));
             }
             i = calculator.add(i, 1);
         }
-        int Tabsize = calculator.subtract(lenghtofStringTab,1);
+        int Tabsize;
+        if (j == 0) {
+             Tabsize = calculator.subtract(lenghtofStringTab,1);
+        }else{
+             Tabsize = calculator.subtract(lenghtofStringTab,2);
+        }
+
         i=0;
-        while (i<calculator.subtract(lenghtofStringTab,1)){
+        //calculator.subtract(lenghtofStringTab,1)
+        while (i<tab.size()){
             int quantityMultiplier = 1;
             int size = Tabsize;
             while (size>1){
