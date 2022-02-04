@@ -75,9 +75,10 @@ public class InterfejsText {
                 break;
             case 6:
                 //factorial
-                System.out.println("PODAJ DWIE LICZBY");
+                System.out.println("PODAJ LICZBE");
                 System.out.print("X = ");
                 x= scan.nextInt();
+                System.out.print("WYNIK SILNI = ");
                 System.out.println(calculator.factorial(x));
                 Menu(calculator,scan);
                 break;

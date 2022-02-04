@@ -144,13 +144,22 @@ public class Calculator {
 
     public int factorial(int x){
 
-        int sum =1;
-        int i =1;
-        while(i<=x){
-            sum = multiply(sum,i);
-            i=add(i,1);
+        try {
+            if (x >= 0) {
+                int sum = 1;
+                int i = 1;
+                while (i <= x) {
+                    sum = multiply(sum, i);
+                    i = add(i, 1);
+                }
+                return sum;
+            } else {
+                throw new Exception("Silnia tylko dla liczb całkowitoliczbowych");
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return 0;
         }
-        return sum;
     }
 
     public double xProcentOfy(double x,double y) throws Exception {
